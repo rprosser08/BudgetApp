@@ -1,0 +1,49 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:BudgetApp.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="BudgetApp.Views.BudgetItemView"
+             x:DataType="vm:BudgetItemViewModel">
+    <Border
+        Classes="budget-item budget-item-row"
+        >
+        <Grid 
+            ColumnDefinitions="*, *, *"
+            RowDefinitions="Auto, Auto"
+            >
+            <TextBox
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Center"
+                Text="{Binding Description}"
+                Grid.Column="0"
+                Grid.Row="0"
+                TextChanged="TextBox_OnTextChanged"
+            />
+            <NumericUpDown
+                Margin="5"
+                Padding="4"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Center"
+                Grid.Column="1"
+                Grid.Row="0"
+                AllowSpin="False"
+                ShowButtonSpinner="False"
+                Value="{Binding Amount}"
+                ValueChanged="NumericUpDown_OnValueChanged"
+                />
+            <Button 
+                Margin="5"
+                Padding="6, 4"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Command="{Binding DeleteBudgetItem}"
+                CommandParameter="{Binding .}"
+                Grid.Column="2"
+                Grid.Row="0">
+                <PathIcon Data="{StaticResource delete_regular}" />
+            </Button>
+        </Grid>
+    </Border>
+</UserControl>

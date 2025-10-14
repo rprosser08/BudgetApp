@@ -3,6 +3,7 @@
         xmlns:vm="using:BudgetApp.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:views="clr-namespace:BudgetApp.Views"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="BudgetApp.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
@@ -18,7 +19,12 @@
         <vm:MainWindowViewModel/>
     </Design.DataContext>
     
-    <Panel>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.5*" />
+            <ColumnDefinition Width="0.5*" />
+        </Grid.ColumnDefinitions>
+        
         <ExperimentalAcrylicBorder IsHitTestVisible="False">
             <ExperimentalAcrylicBorder.Material>
                 <ExperimentalAcrylicMaterial
@@ -28,6 +34,97 @@
                     MaterialOpacity="0.65" />
             </ExperimentalAcrylicBorder.Material>
         </ExperimentalAcrylicBorder>
-    </Panel>
+        <Border
+            Grid.Column="0"
+            Background="#2A2A2A"
+            CornerRadius="8"
+            Padding="10"
+            BorderBrush="#444"
+            BorderThickness="0 0 0 1"
+            Margin="0 20 0 20">
+            
+            <DockPanel
+                LastChildFill="True"
+            >
+                <Border
+                    Classes="budget-item"
+                    BorderThickness="0 1 0 0 "
+                    DockPanel.Dock="Bottom"
+                    >
+                    <Grid
+                        ColumnDefinitions="*, *, *"
+                        >
+                        <TextBox
+                            Margin="5"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Center"
+                            Watermark="Description"
+                            Text="{Binding NewDescription}" 
+                            Grid.Column="0"
+                            >
+                            <TextBox.KeyBindings>
+                                <KeyBinding Command="{ Binding AddBudgetItemCommand }" Gesture="Enter" />
+                            </TextBox.KeyBindings>
+                        </TextBox>
+                        <NumericUpDown
+                            Margin="5"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Center"
+                            Watermark="Amount"
+                            Value="{Binding NewAmount}"
+                            AllowSpin="False"
+                            ShowButtonSpinner="False"
+                            Grid.Column="1"
+                            >
+                            <NumericUpDown.KeyBindings>
+                                <KeyBinding Command="{ Binding AddBudgetItemCommand }" Gesture="Enter" />
+                            </NumericUpDown.KeyBindings>
+                        </NumericUpDown>
+                        <Button
+                            Padding="6, 4"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Command="{Binding AddBudgetItemCommand}"
+                            Grid.Column="2">
+                            <PathIcon Data="{StaticResource add_square_regular}" />
+                        </Button>
+                    </Grid>
+                </Border>
+                
+                <TextBlock 
+                    Text="Monthly Budget" 
+                    FontWeight="Bold" 
+                    FontSize="18" 
+                    Margin="0,0,0,10" 
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Center" 
+                    DockPanel.Dock="Top" 
+                />
+                
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <ItemsControl Margin="0" ItemsSource="{Binding BudgetItems}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate DataType="vm:BudgetItemViewModel">
+                                <views:BudgetItemView />
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+            </DockPanel>
+        </Border>
+        <DockPanel 
+            Grid.Column="1"
+            >
+            <TextBox
+                Text="Testing second column" 
+                />
+        </DockPanel>
+    </Grid>
 
 </Window>
