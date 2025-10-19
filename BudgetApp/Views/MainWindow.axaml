@@ -124,6 +124,10 @@
             <TextBox
                 Text="Testing second column" 
                 />
+            <Button
+                Content="Open Wizard"
+                Click="OpenWizard_Click"
+                ></Button>
         </DockPanel>
     </Grid>
 
